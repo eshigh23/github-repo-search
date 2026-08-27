@@ -1,12 +1,6 @@
+import './App.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-
-            // <p>{result.name}</p>
-            // <p>{result.description}</p>
-            // <p>tags</p>
-            // <p>{result.language}</p>
-            // <p>{result.stargazers_count}</p>
-            // <p>{result.updated_at}</p>
 
 type SearchResult = {
   id: string,
@@ -72,45 +66,47 @@ function App() {
 
 
   return (
-    <div>
+    <div className="repo-search">
       <p style={{ color: 'red' }}>{error}</p>
-      <form onSubmit={(e)=> searchRepos(e)}>
-        <label> Search
+
+      <form onSubmit={(e)=> searchRepos(e)} className="repo-search--form">
           <input
+            className="repo-search--search-input"
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-        </label>
 
-        <div>
-          <select value={numItems || 30}  onChange={(e) => setNumItems(e.target.value)}>
-            { Array.from({ length: 10 }).map((_, index) => {  // had to look up this syntax
-              const item = (index + 1) * 10
+        <div className="repo-search--options">
+          <div className="repo-search--option-container">
+            <select className="repo-search--select" value={numItems || 30}  onChange={(e) => setNumItems(e.target.value)}>
+              { Array.from({ length: 10 }).map((_, index) => {  // had to look up this syntax
+                const item = (index + 1) * 10
 
-              return (
-                <option key={index} value={item}>{item}</option>
-              )
-          })}
-          </select>
+                return (
+                  <option key={index} value={item}>{item}</option>
+                )
+            })}
+            </select>
+          </div>
+
+          <div className="repo-search--option-container">
+            <select className="repo-search--select" value={sortOption} onChange={(e)=> setSortOption(e.target.value)}>
+              <option value="">Best match</option>
+              <option value="stars">Stars</option>
+              <option value="updated">Recently updated</option>
+            </select>
+          </div>
+
+          <div className="repo-search--option-container">
+            <select className="repo-search--select" value={sortOrder} onChange={(e)=> setSortOrder(e.target.value)}>
+              <option value="desc">Descending</option>
+              <option value="asc">Ascending</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <select value={sortOption} onChange={(e)=> setSortOption(e.target.value)}>
-            <option value="">Best match</option>
-            <option value="stars">Stars</option>
-            <option value="updated">Recently updated</option>
-          </select>
-        </div>
-
-        <div>
-          <select value={sortOrder} onChange={(e)=> setSortOrder(e.target.value)}>
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
-          </select>
-        </div>
-
-        <button>Submit</button>
+        <button className="repo-search--submit">Submit</button>
       </form>
 
 
