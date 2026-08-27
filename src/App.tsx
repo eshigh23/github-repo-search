@@ -1,6 +1,7 @@
 import './App.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import ResultCard from './components/ResultCard/ResultCard'
 
 type SearchResult = {
   id: string,
@@ -8,6 +9,7 @@ type SearchResult = {
   description: string,
   language: string,
   stargazers_count: number,
+  updated_at: string
 }
 
 function App() {
@@ -67,6 +69,7 @@ function App() {
 
   return (
     <div className="repo-search">
+      <h1>Github Repository Search</h1>
       <p style={{ color: 'red' }}>{error}</p>
 
       <form onSubmit={(e)=> searchRepos(e)} className="repo-search--form">
@@ -74,6 +77,7 @@ function App() {
             className="repo-search--search-input"
             type="text"
             value={searchText}
+            placeholder="Search"
             onChange={(e) => setSearchText(e.target.value)}
           />
 
@@ -111,19 +115,17 @@ function App() {
 
 
       <h3>Search Results</h3>
+      { isLoading && <p>Loading...</p> }
+
       <div>
         { searchResults.map(result => (
-          <div key={result.id}>
-            <p>{result.name}</p>
-            <p>{result.description}</p>
-            {/* <p>tags</p> */}
-            <p>{result.language}</p>
-            <p>{result.stargazers_count}</p>
-            {/* <p>{result.updated_at}</p> */}
-          </div>
+          <ResultCard 
+            key={result.id}
+            result={result}
+          />  
         ))}
-      </div>
 
+      </div>
     </div>
   )
 }
