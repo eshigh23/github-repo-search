@@ -12,7 +12,7 @@ type ResultCardProps = {
 
 export default function ResultCard({ result }: ResultCardProps) {
 
-    // had to look this up as well
+    // had to look this up as well, unsure about the timezone argument
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr)  
         let formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });

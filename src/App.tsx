@@ -17,6 +17,7 @@ function App() {
   const [sortOption, setSortOption] = useState('')
   const [sortOrder, setSortOrder] = useState('')
   const [numItems, setNumItems] = useState('')
+  const [page, setPage] = useState(1)
 
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -52,7 +53,6 @@ function App() {
             sort: sortOption ? sortOption : '',
             order: sortOrder ? sortOrder : '',
             per_page: numItems ? numItems : '',
-
           }
         }
       )
@@ -60,7 +60,7 @@ function App() {
       setSearchResults(response?.data?.items)
 
     } catch (e) {
-      console.log('error:', e)
+      setError('Something went wrong, please try again')
     } finally {
       setIsLoading(false)
     }
@@ -108,13 +108,18 @@ function App() {
               <option value="asc">Ascending</option>
             </select>
           </div>
+
         </div>
 
         <button className="repo-search--submit">Submit</button>
       </form>
 
+      
+      <div>
+        <h3>Search Results</h3>
+        <p>Page {page} </p>
+      </div>
 
-      <h3>Search Results</h3>
       { isLoading && <p>Loading...</p> }
 
       <div>
