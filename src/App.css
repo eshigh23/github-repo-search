@@ -1,4 +1,7 @@
 
+.clickable {
+    cursor: pointer;
+}
 
 .repo-search {
     margin: 0 auto;
@@ -36,10 +39,21 @@
     padding: .25rem;
 }
 
-
 .repo-search--submit {
     border-radius: 2px;
     border: 1px solid grey;
     height: 30px;
     cursor: pointer;
+}
+
+.repo-search--search-results {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.repo-search--page-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }

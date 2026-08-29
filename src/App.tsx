@@ -2,6 +2,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import ResultCard from './components/ResultCard/ResultCard'
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 type SearchResult = {
   id: string,
@@ -24,24 +25,28 @@ function App() {
   const [error, setError] = useState('')
 
 
-  useEffect(() => {
-    console.log('sortOption:', sortOption)
-  }, [sortOption])
+
+  const changePage = (pageDirection: number) => {
+    let newPage = page + pageDirection
+    if (newPage < 1 || searchResults.length === 0) return // don't change page if less than 0 or if no search results
+
+    setPage(newPage)
+    searchRepos(null, newPage)
+  }
 
 
-  useEffect(() => {
-    console.log('numItems:', numItems)
-  }, [numItems])
-
-
-  const searchRepos = async (e: any) => {
-    e.preventDefault()
+  const searchRepos = async (e?: any, pageNumber?: number) => {
+    if (e) e.preventDefault()
 
     if (searchText.trim() === "") {
       setError('Please enter a search term')
       return
     }
-    
+
+    if (!pageNumber) {  // if no page number is passed in, reset page
+      setPage(1)
+    }
+
     setError('')
 
     try {
@@ -53,10 +58,11 @@ function App() {
             sort: sortOption ? sortOption : '',
             order: sortOrder ? sortOrder : '',
             per_page: numItems ? numItems : '',
+            page: pageNumber || 1 
           }
         }
       )
-      console.log('response:', response)
+
       setSearchResults(response?.data?.items)
 
     } catch (e) {
@@ -115,9 +121,26 @@ function App() {
       </form>
 
       
-      <div>
+      <div className="repo-search--search-results">
         <h3>Search Results</h3>
-        <p>Page {page} </p>
+        <div className="repo-search--page-container">
+          { page > 1 && searchResults.length > 0 && (
+              <ChevronLeft 
+              className="clickable" 
+              onClick={() => changePage(-1)}
+              size={15} 
+              color="black"
+            />
+          )}
+            <p>Page {page} </p>
+
+            <ChevronRight
+              onClick={() => changePage(1)}
+              className="clickable"
+              size={15} 
+              color="black"
+            />
+        </div>
       </div>
 
       { isLoading && <p>Loading...</p> }

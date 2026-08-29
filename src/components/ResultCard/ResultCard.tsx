@@ -31,7 +31,6 @@ export default function ResultCard({ result }: ResultCardProps) {
                 <p className="result-card--subtext">・</p>
                 <p className="result-card--subtext">Updated on {formatDate(result.updated_at)}</p>
             </div>
-           
           </div>
     )
 }
