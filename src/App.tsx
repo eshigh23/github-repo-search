@@ -10,7 +10,8 @@ type SearchResult = {
   description: string,
   language: string,
   stargazers_count: number,
-  updated_at: string
+  updated_at: string,
+  owner: { login: string }
 }
 
 function App() {
@@ -31,12 +32,11 @@ function App() {
     if (newPage < 1 || searchResults.length === 0) return // don't change page if less than 0 or if no search results
 
     setPage(newPage)
-    searchRepos(null, newPage)
+    searchRepos(newPage)
   }
 
 
-  const searchRepos = async (e?: any, pageNumber?: number) => {
-    if (e) e.preventDefault()
+  const searchRepos = async (pageNumber?: number) => {
 
     if (searchText.trim() === "") {
       setError('Please enter a search term')
@@ -55,13 +55,15 @@ function App() {
         {
           params: {
             q: searchText,
-            sort: sortOption ? sortOption : '',
-            order: sortOrder ? sortOrder : '',
-            per_page: numItems ? numItems : '',
+            sort: sortOption || '',
+            order: sortOrder || '',
+            per_page: numItems || '',
             page: pageNumber || 1 
           }
         }
       )
+
+      // console.log('response:', response)
 
       setSearchResults(response?.data?.items)
 
@@ -73,12 +75,18 @@ function App() {
   }
 
 
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    searchRepos()
+  }
+
+
   return (
     <div className="repo-search">
       <h1>Github Repository Search</h1>
       <p style={{ color: 'red' }}>{error}</p>
 
-      <form onSubmit={(e)=> searchRepos(e)} className="repo-search--form">
+      <form onSubmit={handleSubmit} className="repo-search--form">
           <input
             className="repo-search--search-input"
             type="text"
@@ -143,17 +151,20 @@ function App() {
         </div>
       </div>
 
-      { isLoading && <p>Loading...</p> }
-
-      <div>
-        { searchResults.map(result => (
-          <ResultCard 
-            key={result.id}
-            result={result}
-          />  
-        ))}
-
-      </div>
+      { isLoading 
+        ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            { searchResults.map(result => (
+              <ResultCard 
+                key={result.id}
+                result={result}
+              />  
+            ))}
+          </div>
+        )
+      }
     </div>
   )
 }

@@ -6,7 +6,8 @@ type ResultCardProps = {
         description: string,
         language: string,
         stargazers_count: number,
-        updated_at: string
+        updated_at: string,
+        owner: { login: string }
     }
 }
 
@@ -22,14 +23,14 @@ export default function ResultCard({ result }: ResultCardProps) {
 
     return (
          <div className="result-card">
-            <p className="result-card--title">{result.name}</p>
+            <p className="result-card--title">{result.owner.login}/{result.name}</p>
             <p className="result-card--description">{result.description}</p>
             <div className="result-card--subtext-container">
-                <p className="result-card--subtext">{result.language}</p>
-                <p className="result-card--subtext">・</p>
-                <p className="result-card--subtext">{result.stargazers_count}</p>
-                <p className="result-card--subtext">・</p>
-                <p className="result-card--subtext">Updated on {formatDate(result.updated_at)}</p>
+                <p>{result.language}</p>
+                <p>・</p>
+                <p>{result.stargazers_count}</p>
+                <p>・</p>
+                <p>Updated on {formatDate(result.updated_at)}</p>
             </div>
           </div>
     )

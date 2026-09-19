@@ -24,7 +24,5 @@
     display: flex;
     align-items: center;
     gap: .5rem;
-}
-.result-card--subtext {
     color: grey;
 }
