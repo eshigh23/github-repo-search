@@ -1,0 +1,59 @@
+
+.clickable {
+    cursor: pointer;
+}
+
+.repo-search {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 1rem;
+}
+
+.repo-search--form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.repo-search--search-input {
+    height: 35px;
+    border-radius: 2px;
+    border: 1px solid grey;
+    background-color: #E7F0FE;
+    padding-inline: .5rem;
+}
+
+.repo-search--options {
+    display: flex;
+    gap: 1rem;
+}
+
+.repo-search--option-container {
+    flex: 1;
+}
+
+.repo-search--select {
+    width: 100%;
+    height: 30px;
+    border-radius: 2px;
+    padding: .25rem;
+}
+
+.repo-search--submit {
+    border-radius: 2px;
+    border: 1px solid grey;
+    height: 30px;
+    cursor: pointer;
+}
+
+.repo-search--search-results {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.repo-search--page-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

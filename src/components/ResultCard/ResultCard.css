@@ -1,0 +1,28 @@
+.result-card p {
+    margin: 0;
+    padding: 0;
+}
+
+
+.result-card {
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    gap: .75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.result-card--title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: blue;
+}
+
+.result-card--subtext-container {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: grey;
+}
